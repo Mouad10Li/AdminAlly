@@ -1,0 +1,21 @@
+---
+- hosts: routers
+  become: yes
+
+  tasks:
+    - name: Configure Loopback0
+      cisco.ios.ios_config:
+        lines:
+          - interface Loopback0
+          - ip address 1.1.1.1 255.255.255.255
+          - no shutdown
+
+    - name: Verify Loopback0 configuration
+      cisco.ios.ios_command:
+        commands:
+          - show running-config interface Loopback0
+      register: loopback_config
+
+    - name: Display Loopback0 configuration
+      debug:
+        var: loopback_config.stdout_lines

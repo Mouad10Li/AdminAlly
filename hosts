@@ -1,0 +1,18 @@
+[routers]
+router1 ansible_host=192.168.122.4   # Specifies Router1's IP address for Ansible to connect.
+router2 ansible_host=192.168.122.2   # Specifies Router2's IP address for Ansible to connect.
+router3 ansible_host=192.168.122.3   # Specifies Router3's IP address for Ansible to connect.
+
+[dns_server]
+192.168.122.200  # Replace this IP address with the one assigned by DHCP to your server.
+
+[dns_server:vars]
+ansible_ssh_private_key_file=~/.ssh/allyadmin.pub  # Replace this path with the location of the SSH key file you created to connect to the server.
+
+[routers:vars]
+ansible_connection=network_cli       # Tells Ansible to use CLI-based communication for network devices.
+ansible_network_os=ios               # Specifies the network operating system (Cisco IOS in this case).
+ansible_user=mouad                   # Defines the username for SSH login.
+ansible_ssh_pass=mouad               # Defines the password for SSH login.
+# please don't hack into my lab :)
+

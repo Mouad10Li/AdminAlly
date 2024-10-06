@@ -1,0 +1,55 @@
+---
+- hosts: router1
+  become: yes
+
+  tasks:
+    - name: Configure int g0/1
+      cisco.ios.ios_config:
+        lines:
+          - interface g0/1
+          - ip address 10.1.1.2 255.255.255.0
+          - no shutdown
+
+    - name: Save configuration 
+      cisco.ios.ios_command:
+        commands:
+          - write memory
+
+- hosts: router2
+  become: yes
+
+  tasks:
+    - name: Configure int g0/2
+      cisco.ios.ios_config:
+        lines:
+          - interface g0/2
+          - ip address 10.1.1.1 255.255.255.0 
+          - no shutdown
+
+    - name: Configure int g0/1
+      cisco.ios.ios_config:
+        lines:
+          - interface g0/1
+          - ip address 20.1.1.1 255.255.255.0    
+          - no shutdown
+
+    - name: Save configuration
+      cisco.ios.ios_command:
+        commands:
+          - write memory
+
+- hosts: router3
+  become: yes
+
+  tasks:
+    - name: Configure int g0/1
+      cisco.ios.ios_config:
+        lines:
+          - interface g0/1
+          - ip address 20.1.1.2 255.255.255.0
+          - no shutdown
+
+    - name: Save configuration 
+      cisco.ios.ios_command:
+        commands:
+          - write memory

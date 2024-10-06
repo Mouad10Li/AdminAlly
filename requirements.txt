@@ -1,0 +1,9 @@
+# Create a virtual environment (so you can use pip to install python packages)
+python3 -m venv ansible_env
+source ansible_env/bin/activate
+
+# Install required Python packages
+pip install paramiko ansible ansible-netcommon
+
+# Install Cisco IOS Ansible collection
+ansible-galaxy collection install cisco.ios

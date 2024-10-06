@@ -1,0 +1,27 @@
+---
+- hosts: dns_server
+  become: yes
+
+  tasks:
+    - name: Update apt package list
+      apt:
+        update_cache: yes
+
+    - name: Install bind9 package
+      apt:
+        name: bind9
+        state: present
+
+    - name: Start and enable bind9 service
+      systemd:
+        name: bind9
+        state: started
+        enabled: yes
+
+    - name: Check if bind9 service is running
+      command: systemctl is-active bind9
+      register: bind9_status
+
+    - name: Display the bind9 service status
+      debug:
+        msg: "Bind9 service is {{ bind9_status.stdout }}"
