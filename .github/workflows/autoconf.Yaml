@@ -1,0 +1,26 @@
+name: CI/CD Pipeline for Cisco Router Configuration
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run Ansible Playbook to Assign IP Addresses
+        run: |
+          ansible-playbook -i inventory assign_ip_addresses.yaml
+        env:
+          ANSIBLE_HOST_KEY_CHECKING: 'False'
+
+      - name: Run Ansible Playbook to Create Loopback Interface
+        run: |
+          ansible-playbook -i inventory create_Loopback_interface.yaml
+        env:
+          ANSIBLE_HOST_KEY_CHECKING: 'False'
